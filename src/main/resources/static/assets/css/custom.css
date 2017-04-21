@@ -1,0 +1,187 @@
+
+.navbar-fixed-top {
+	background-color: #12ce66;
+}
+.container .row .col-md-4 .panel {
+	padding-top: 70px;
+}
+.container .chart .col-md-4 .panel {
+	padding-top: 0px;
+}
+
+.container .row .col-lg-12 .panel {
+	/*padding-top: 50px;*/
+	margin-top : 60px;
+}
+.container .row .col-lg-8 .panel {
+	/*padding-top: 50px;*/
+	margin-top : 60px;
+}
+.container .row .col-lg-4 .panel {
+	/*padding-top: 50px;*/
+	margin-top : 60px;
+}
+.profile-img {
+	width: 96px;
+	height: 96px;
+	margin: 0 auto 10px;
+	display: block;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+}
+
+.clearfix {
+	padding-top: 20px;
+}
+.clearfix .list-inline li a {
+	color: #fff;
+}
+hr {
+	color: #000;
+	border-color: #fff;
+}
+.panel {
+	border:none;
+}
+.num {
+	font-size: 1.5em;
+	color: #337ab7
+}
+body {
+	font-family: Verdana;
+	font-weight: 300;
+	background-color: #f0f4f6;
+	font-size: 12px;
+}
+
+/*h4 {
+	margin-left: 10px;
+}*/
+h5 {
+	color: #fff;
+}
+.tr-pie-charts td {
+	width: 33%;
+}
+.dataTable tbody tr:hover {
+	color: #12ce66;
+}
+table thead tr th {
+	text-transform: capitalize;
+}
+/*tr.active td {
+	color: #337ab7;
+	color: #000;
+}*/
+#clicks-pie {
+	height: 307px;
+}
+#fi-pie {
+	height: 307px;
+}
+#imp-pie {
+	height: 307px;
+}
+
+text {
+	fill: #fff;
+}
+li.sep {
+	border-left : 1px solid #fff;
+	height : 12px;
+}
+li a {
+	cursor: pointer;
+}
+li p {
+	color: #fff;
+}
+.go-back {
+	color: #fff;
+}
+.navbar-brand {
+	padding: 11px 15px;
+}
+.date-range {
+	background: #fff;
+	cursor: pointer;
+	padding: 0.375rem 0.75rem;
+	font-size: 0.945rem;
+	border: 1px solid #ccc;
+	width: 100%;
+	margin-top : 15px;
+}
+.daterangepicker {
+	padding: 0px;
+	box-shadow: 0px transparent;
+}
+.daterangepicker li {
+	background-color: #fff;
+	color : #000;
+	border-color : transparent;
+}
+.daterangepicker li:hover {
+	background-color: #12ce66;
+	color : #fff;
+	border-color : transparent;
+}
+.daterangepicker li.active {
+	background-color: #12ce66;
+	border-color : transparent;
+}
+.daterangepicker td.active:hover {
+	background-color: #12ce66;
+	border-color : transparent;
+}
+.daterangepicker td.active {
+	background-color: #12ce66;
+	border-color : transparent;
+}
+.daterangepicker .ranges {
+	float: right !important;
+}
+.daterangepicker.opensright:after {
+    left: 0px;
+}
+.daterangepicker:after {
+	border-right: none;
+	border-bottom: none;
+    border-left: none;
+}
+.daterangepicker:before {
+	border-right: none;
+	border-bottom: none;
+    border-left: none;
+}
+.daterangepicker .ranges ul > li {
+	font-size: 12px;
+}
+.daterangepicker table > tr {
+	font-size: 12px;
+}
+.daterangepicker table > tr > th {
+	font-size: 12px;
+}
+.daterangepicker table > tr > td {
+	font-size: 12px;
+}
+li > i.glyphicon {
+	top: 8px;
+}
+
+#open-model {
+	display:none;
+}
+
+
+/* image rotate Y axis */
+/*.navbar-brand > img:hover {
+    position: absolute;
+    -webkit-animation:spin 2s linear infinite;
+    -moz-animation:spin 2s linear infinite;
+    animation:spin 2s linear infinite;
+}
+@-moz-keyframes spin { 100% { -moz-transform: rotateY(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotateY(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotateY(360deg); transform:rotateY(360deg); } }*/
