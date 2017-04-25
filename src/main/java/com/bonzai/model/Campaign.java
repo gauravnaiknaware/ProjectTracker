@@ -17,7 +17,7 @@ import org.hibernate.annotations.DynamicInsert;
 
 
 @Entity
-@Table(name="campaign_user_master")
+@Table(name="campaign_master")
 @DynamicInsert
 public class Campaign implements Serializable {
 	

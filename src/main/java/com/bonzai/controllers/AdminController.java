@@ -15,17 +15,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bonzai.model.Campaign;
+import com.bonzai.model.User;
 import com.bonzai.repository.CampaignRepository;
 import com.bonzai.services.CampaignService;
+import com.bonzai.services.UserService;
 
 @Configuration
 @ComponentScan(basePackages={"com.*"})
 @PropertySource("classpath:/admin.properties")
 @Controller
 @RequestMapping("/admin")
-public class Admindashboard {
+public class AdminController {
 
-	final static Logger log = Logger.getLogger(Admindashboard.class);
+	final static Logger log = Logger.getLogger(AdminController.class);
 	
 	@Value("${admin.statusnotlike}")
 	private String status_not_like;
@@ -48,13 +50,14 @@ public class Admindashboard {
 	@Value("${create.build}")
 	private String builds;
 	
-	
 	@Autowired
 	CampaignService campaignService;
 	
 	@Autowired
 	CampaignRepository campaignRepository;
 	
+	@Autowired
+	UserService userService;
 	
 	@RequestMapping(value="/dashboard")
 	public String adminDashboard(Model model){
@@ -106,4 +109,14 @@ public class Admindashboard {
 		return "adminviewticket";
 	}
 	
+	@RequestMapping(value="/adduser")
+	public String addUser(Model model){
+		List<String> team = Arrays.asList(teams.split("\\s*,\\s*"));
+		model.addAttribute("role", team);
+		
+		List<User> users = userService.getAll();
+		model.addAttribute("users", users);
+		
+		return "adduser";
+	}
 }
