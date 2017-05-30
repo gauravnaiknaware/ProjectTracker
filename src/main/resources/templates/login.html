@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Dashboard</title>
+  <link rel="icon" href="assets/img/favicon.png" />
+  <link rel="stylesheet" type="text/css" th:href="@{/assets/css/bootstrap.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/assets/css/jquery.dataTables.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/assets/css/morris.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/assets/css/daterangepicker.css}" />
+
+  <link rel="stylesheet" type="text/css" th:href="@{/assets/css/custom.css}" />  
+  <link rel="stylesheet" type="text/css" th:href="@{/assets/css/login.css}" />
+  
+  <script type="text/javascript" th:src="@{/assets/js/jquery.js}"></script>
+  <script type="text/javascript" th:src="@{/assets/js/bootstrap.js}"></script>
+  <script type="text/javascript" th:src="@{/assets/js/jquery.dataTables.js}"></script>
+  <!-- <script type="text/javascript" src="assets/js/loadingoverlay.min.js"></script>
+  <script type="text/javascript" src="assets/js/loadingoverlay_progress.min.js"></script> -->
+  <script type="text/javascript" th:src="@{/assets/js/moment.min.js}"></script>
+  <script type="text/javascript" th:src="@{/assets/js/daterangepicker.js}"></script>
+
+  <!-- <script type="text/javascript" src="assets/js/convertToXls.js"></script>
+  <script type="text/javascript" src="assets/js/custom.js"></script> -->
+  <script type="text/javascript" th:src="@{/assets/js/env.js}"></script>
+  <script type="text/javascript" th:src="@{/assets/js/login.js}"></script>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <img th:src="@{/assets/img/pre-loader.png}"></img>
+          </a>
+      </div>
+    </div>
+  </nav>  
+<div id="app" class="container">
+  	<div class="row">
+  		<div class="col-lg-4"></div>
+    	<div class="col-lg-8">
+				<div class="flip">
+					<div class="card"> 
+						<div class="face front"> 
+							<form class="well well-sm col-md-6 inner" role="form" action="/validate"> 
+								<div class="form-group">
+								  <label for="email">Enter Email</label>
+								  <input name="email" type="email" id="email" class="form-control" placeholder="Enter Email" aria-describedby="basic-addon1" />
+								</div>
+								<div class="form-group">
+								  <label for="password">Enter Password</label>
+								  <input name="password" type="password" id="password" class="form-control" placeholder="Enter Password" aria-describedby="basic-addon1" />
+								</div>
+								<button type="submit"  class="btn btn-primary">Submit</button>
+							</form>
+						</div> 
+					</div>	 
+				</div>	
+   		</div>	
+   	</div>
+ </div> 
+
+</body>
+</html>

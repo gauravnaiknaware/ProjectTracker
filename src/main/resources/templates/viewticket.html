@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Ticket</title>
+  <link rel="icon" th:href="@{/assets/img/favicon.png}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/assets/css/bootstrap.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/assets/css/jquery.dataTables.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/assets/css/morris.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/assets/css/daterangepicker.css}" />
+
+  <link rel="stylesheet" type="text/css" th:href="@{/assets/css/custom.css}" />
+
+  <script type="text/javascript" th:src="@{/assets/js/jquery.js}"></script>
+  <script type="text/javascript" th:src="@{/assets/js/bootstrap.js}"></script>
+  <script type="text/javascript" th:src="@{/assets/js/jquery.dataTables.js}"></script>
+  <!-- <script type="text/javascript" src="assets/js/loadingoverlay.min.js"></script>
+  <script type="text/javascript" src="assets/js/loadingoverlay_progress.min.js"></script> -->
+  <script type="text/javascript" th:src="@{/assets/js/moment.min.js}"></script>
+  <script type="text/javascript" th:src="@{/assets/js/daterangepicker.js}"></script>
+
+  <!-- <script type="text/javascript" src="assets/js/convertToXls.js"></script>
+  <script type="text/javascript" src="assets/js/custom.js"></script> -->
+  <script type="text/javascript" th:src="@{/assets/js/env.js}"></script>
+  <script type="text/javascript" th:src="@{/assets/js/viewticket.js}"></script>
+</head>
+<body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <img th:src="@{/assets/img/pre-loader.png}"></img>
+          </a>
+      </div>
+      <div class="col-sm-4 clearfix hidden-xs">
+        <ul class="list-inline links-list">
+          <li>
+            <a href="/console/dashboard" class="">
+            Dashboard
+            </a>
+          </li>
+          <li class="sep"></li>
+          <li>
+            <a href="/console/ticket" class="">
+            My Ticket
+            </a>
+          </li>
+          <li class="sep" th:if="${session.role == 'Admin'}"></li>
+          <li th:if="${session.role == 'Admin'}">
+            <a href="/console/create" class="">
+            Create Ticket
+            </a>
+          </li>
+          <li class="sep" th:if="${session.role == 'Admin'}"></li>
+          <li th:if="${session.role == 'Admin'}">
+            <a href="/console/adduser" class="">
+            Add User
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-4 clearfix hidden-xs pull-right">
+        <ul class="list-inline links-list pull-right">
+          <li>
+            <a href="/console/profile"><p th:text=" ${session.userEmailId} " /></a>
+          </li>
+          <li class="sep"></li>
+          <li>
+            <a href="" class="logout-uri">
+              Sign Out <i class="glyphicon glyphicon-log-out"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div id="app" class="container">
+  	<div class="row">
+  	
+  	
+   		<div class="col-lg-12">
+   			<div class="panel panel-default panel-shadow">
+   				<div class="panel-heading">
+   					<div class="panel-title">
+   						<ul class="list-inline links-list">
+   							<li>
+   								<h4>Ticket</h4>
+   							</li>
+                            <li class="pull-right" th:if="${session.role == 'Admin'}">
+                                <a th:attr="href='/console/timespent/'+${campaign.id}" class="btn btn-default" role="button">Time Spent</a>
+                            </li>
+                            <li class="pull-right" th:if="${session.role == 'Admin'}">
+                                <button type="submit" th:attr="onclick='ticketUpdate('+${campaign.id}+','+${session.userId}+')'" th:id="${campaign.id}" class="btn btn-default updateBtn" style="display:none">Update</button>
+   							</li>
+   						</ul>
+   					</div>
+   				</div>
+   				<div class="panel-body">
+					
+				    <div class="form-horizontal col-sm-8" >
+
+                            <div class="form-group ">
+                                <label class="control-label col-sm-2" for="clientName">Client Name :</label>
+                                    <div class="col-sm-10" th:switch="${session.role}">
+                                        <input th:case="'Admin'" type="text" autocomplete="off" class="form-control" id="clientName" th:value="${campaign.clientName}"  />
+                                        <p th:case="'User'" class="form-control" id="clientName" th:text="${campaign.clientName}"  />
+                                    </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="control-label col-sm-2" for="name">Campaign Name :</label>
+                                <div class="col-sm-10" th:switch="${session.role}">
+                                    <input th:case="'Admin'" type="text" autocomplete="off" class="form-control" id="name" th:value="${campaign.name}" />
+                                    <p th:case="'User'" autocomplete="off" class="form-control" id="name" th:text="${campaign.name}" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="description">Description :</label>
+                                <div class="col-sm-10" th:switch="${session.role}">
+                                    <textarea th:case="'Admin'" class="form-control" maxlength="1000" rows="5" id="description" th:text="${campaign.description}"></textarea>
+                                    <div th:case="'User'" class="form-control" maxlength="1000" style="height:150px;word-break:break-all;overflow-y:scroll;" id="description" th:text="${campaign.description}"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="comment">Comment :</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" maxlength="1000" rows="5" id="comment" ></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-default col-sm-offset-10">Comment</button>
+                            </div>
+                            <!--chat-->
+                            <div class="chat col-sm-10 col-sm-offset-2">
+
+                                <div class="chat-history">
+                                    <ul th:each="c : ${comments}">
+
+                                        <li>
+                                            <div class="message-data">
+                                                <span class="message-data-name" th:inline="text">
+                                                    <i class="fa fa-circle online"></i> [[${c.user.name}]]
+                                                </span>
+                                                <span class="message-data-time" th:text="${#calendars.format(c.time,'dd-MM-yyyy HH:mm')}">10:12 AM, Today</span>
+                                            </div>
+                                            <div class="message my-message" th:text="${c.comment}">
+                                                Are we meeting today? Project has been already finished and I have results to show you.
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!--chat-->
+					 </div>
+
+                    <div class="form-horizontal col-sm-4" >
+                        <div class="form-group ">
+                            <label class="control-label col-sm-4" for="date">In Date :</label>
+                            <div class="col-sm-6">
+                                <p class="form-control" id="date" th:text="${campaign.date}"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" for="dueDate">Due Date :</label>
+                            <div class="col-sm-6" >
+                                <p class="form-control" id="dueDate" th:text="${campaign.dueDate}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" for="state">State :</label>
+                            <div class="col-sm-6" >
+                                <p class="form-control" id="state" th:text="${campaign.state}" />
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="control-label col-sm-4" for="zone">Zone :</label>
+                            <div class="col-sm-6" th:switch="${session.role}">
+                                <select th:case="'Admin'" class="form-control" id="zone">
+                                    <option th:each="z : ${zone}" th:text="${z}" th:selected="${campaign.zone == z}"></option>
+                                </select>
+                                <p th:case="'User'" class="form-control" id="zone" th:text="${campaign.zone}"></p>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="control-label col-sm-4" for="buildEntry">Build Entry :</label>
+                            <div class="col-sm-6" th:switch="${session.role}">
+                                <select th:case="'Admin'" class="form-control" id="buildEntry">
+                                    <option th:each="b : ${build}" th:text="${b}" th:selected="${campaign.buildEntry == b}"></option>
+                                </select>
+                                <p th:case="'User'" class="form-control" id="buildEntry" th:text="${campaign.buildEntry}"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" for="task">Task Type :</label>
+                            <div class="col-sm-6" th:switch="${session.role}">
+                                <select th:case="'Admin'" class="form-control" id="task">
+                                    <option th:each="tk : ${task}" th:text="${tk}" th:selected="${campaign.task == tk}"></option>
+                                </select>
+                                <p th:case="'User'" class="form-control" id="task" th:text="${campaign.task}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" for="team">Team :</label>
+                            <div class="col-sm-6" >
+                                <select th:if="${campaign.user.name == session.userEmailId and session.role == 'User' or session.role != 'User'}" class="form-control" id="team">
+                                    <option th:each="t : ${team}" th:text="${t}" th:value="${t}" th:selected="${campaign.team == t}"></option>
+                                </select>
+                                <p th:if="${campaign.user.name != session.userEmailId and session.role == 'User'}" class="form-control" id="team" th:text="${campaign.team}" />
+                            </div>
+                            <div class="col-sm-1" th:if="${session.role == 'User'}">
+                                <button type="submit" th:attr="onclick='assignTo('+${campaign.id}+')'" th:id="${campaign.id}" class="btn btn-default assignBtn" style="display:none">
+                                    <span class="glyphicon glyphicon-open" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" for="status">Status :</label>
+                            <div class="col-sm-6">
+                                <select th:if="${campaign.user.name == session.userEmailId and session.role == 'User' or session.role != 'User'}" class="form-control" id="status">
+                                    <option th:each="st : ${status}" th:text="${st}" th:selected="${campaign.status == st}"></option>
+                                </select>
+                                <p th:if="${campaign.user.name != session.userEmailId and session.role == 'User'}" class="form-control" id="status" th:text="${campaign.status}" />
+                            </div>
+                            <div class="col-sm-1" th:if="${session.role == 'User'}">
+                                <button type="submit" th:attr="onclick='updateStatus('+${campaign.id}+')'" th:id="${campaign.id}" class="btn btn-default updateStatusBtn" style="display:none">
+                                    <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" for="priority">Priority :</label>
+                            <div class="col-sm-6" th:switch="${session.role}">
+                                <select th:case="'Admin'" class="form-control" id="priority">
+                                    <option th:each="p : ${priority}" th:text="${p}" th:selected="${campaign.priority == p}"></option>
+                                </select>
+                                <p th:case="'User'" class="form-control" id="priority" th:text="${campaign.priority}" />
+                            </div>
+                        </div>
+                    </div>
+   				</div>
+   			</div>
+   		</div>
+   	</div>
+  </div>
+</body>
+</html>

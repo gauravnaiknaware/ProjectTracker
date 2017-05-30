@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Add User</title>
+  <title>Dashboard</title>
   <link rel="icon" href="assets/img/favicon.png" />
   <link rel="stylesheet" type="text/css" th:href="@{/assets/css/bootstrap.css}" />
   <link rel="stylesheet" type="text/css" th:href="@{/assets/css/jquery.dataTables.css}" />
@@ -24,7 +24,7 @@
   <!-- <script type="text/javascript" src="assets/js/convertToXls.js"></script>
   <script type="text/javascript" src="assets/js/custom.js"></script> -->
   <script type="text/javascript" th:src="@{/assets/js/env.js}"></script>
-  <script type="text/javascript" th:src="@{/assets/js/adduser.js}"></script>
+  <script type="text/javascript" th:src="@{/assets/js/ticket.js}"></script>
 </head>
 <body>
   <nav class="navbar navbar-default navbar-fixed-top">
@@ -36,26 +36,26 @@
       </div>
       <div class="col-sm-4 clearfix hidden-xs">
         <ul class="list-inline links-list">
-          <li>
+           <li>
             <a href="/console/dashboard" class="">
             Dashboard
             </a>
           </li>
           <li class="sep"></li>
-           <li>
-            <a href="/console/ticket" class="">
-            My Ticket
+          <li>
+            <a href="#" class="">
+           	My Ticket
             </a>
           </li>
-          <li class="sep"></li>
-          <li>
+          <li class="sep" th:if="${session.role == 'Admin'}"></li>
+          <li th:if="${session.role == 'Admin'}">
             <a href="/console/create" class="">
             Create Ticket
             </a>
           </li>
-           <li class="sep"></li>
-          <li>
-            <a href="#" class="">
+          <li class="sep" th:if="${session.role == 'Admin'}"></li>
+          <li th:if="${session.role == 'Admin'}">
+            <a href="/console/adduser" class="">
             Add User
             </a>
           </li>
@@ -84,83 +84,58 @@
    					<div class="panel-title">
    						<ul class="list-inline links-list">
    							<li>
-   								<h4>Add User</h4>
+   								<h4>My Ticket</h4>
    							</li>
-
-   							<!-- <li class="pull-right">
-   								<div class="date-range" class="pull-right">
-   							    <i class="glyphicon glyphicon-calendar"></i>&nbsp;
-   							    <span></span>
-   							</div>
-   							</li> -->
    						</ul>
    					</div>
    				</div>
    				<div class="panel-body">
-						<div class="form-horizontal" >
-						
-							<div class="form-group">
-						      <label class="control-label col-sm-2" for="clientName">Email Id :</label>
-						      <div class="col-sm-10">
-						        <input type="text" autocomplete="off" class="form-control" id="name" placeholder="Enter Email Id" />
-						      </div>
-						    </div>
-						    
-						    <div class="form-group">
-						      <label class="control-label col-sm-2" for="team">Team :</label>
-						      <div class="col-sm-10">
-						        <select class="form-control" id="team">
-						        	<option value="">Select Team</option>
-							        <option th:each="t : ${team}" th:text="${t}"></option>
-							    </select>
-							   </div>
-						    </div>
-						    
-						    <div class="form-group">
-						      <label class="control-label col-sm-2" for="role">Role :</label>
-						      <div class="col-sm-10">
-						        <select class="form-control" id="role">
-						        	<option value="">Select Role</option>
-							        <option th:each="r : ${role}" th:text="${r}"></option>
-							    </select>
-							   </div>
-						    </div>
-						    
-						    <div class="form-group">
-						      <div class="col-sm-offset-2 col-sm-10">
-						        <button type="submit" onclick="createUser()" class="btn btn-default">Submit</button>
-						      </div>
-					      </div>
-					 </div> 
-   				</div>
-   				
-   				
-   				<div class="panel-body">
    					<div>
-   					<table>
+   						<table>
 				    		<thead>
 				    			<tr>
-				    				<th>User Name</th>
-				    				<th>Team</th>
-				    				<th>Role</th>
+				    				<th>In Date</th>
+				    				<th>Zone</th>
+				    				<th>Client Name</th>
+				    				<th>Campaign Name</th>
+				    				<th>Build Entry</th>
+				    				<th>Task Type</th>
+				    				<th>Due Date</th>
+				    				<th>Status</th>
+				    				<th>Priority</th>
+				    				<th>Action</th>
 				    			</tr>
 				    		</thead>
+				 			<tfoot></tfoot>
 				    		<tbody>
-				    			<tr th:each="user : ${users}" class="clickable-row" th:id="${user.id}">
-				    				<td th:text="${user.name}"></td>
-				    				<td th:text="${user.team}"></td>
-				    				<td th:text="${user.role}"></td>
+				    			<tr th:each="camp : ${campaigns}" 
+				    				th:id="${camp.id}" 
+				    				th:classappend="${camp.state}" 
+				    				class="clickable-row" 
+				    				th:attr="data-href='/console/view/'+${camp.id},
+				    						data-state=${camp.state == 'start' ? '/console/stop/'+camp.id : '/console/start/'+camp.id}"
+				    			>
+					    				<td th:text="${camp.date}"></td>
+					    				<td th:text="${camp.zone}"></td>
+					    				<td th:text="${camp.clientName}"></td>
+					    				<td th:text="${camp.name}"></td>
+					    				<td th:text="${camp.buildEntry}"></td>
+					    				<td th:text="${camp.task}"></td>
+					    				<td th:text="${camp.dueDate}"></td>
+					    				<td th:text="${camp.status}"></td>
+					    				<td th:text="${camp.priority}"></td>
+					    				<td th:text="${camp.state}"></td>
 				    			</tr>
 				    		</tbody>
 				    	</table>
-				    	</div>
+   					</div>
    				</div>
-   				
-   				
-   				
    			</div>
    		</div>
    	</div>
-  </div>
+ </div>
+ 
+
+
 </body>
 </html>

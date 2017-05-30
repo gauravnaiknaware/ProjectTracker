@@ -1,9 +1,10 @@
-package com.bonzai.services;
+package com.bonzai.Impl;
 
 import java.io.Serializable;
 
 import java.util.List;
 
+import com.bonzai.services.CampaignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

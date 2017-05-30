@@ -1,4 +1,4 @@
-var link = "/Tenjin/logout";
+var link = "/console/logout";
 
 $(function (){
  	$( ".logout-uri" ).attr("href",link);
